@@ -35,6 +35,8 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         }
     }
     self.patternTypes = [NSArray arrayWithArray:patternsCache];
+    [self.towelCollectionView setBackgroundColor:[UIColor clearColor]];
+    [self performSelector:@selector(shufflePatterns) withObject:nil afterDelay:5];
 
 }
 
@@ -70,7 +72,6 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 # pragma mark - Game Logics
 
 - (void)shufflePatterns {
-    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:_patternTypes];
     
     for(int i = (int)[temp count]; i > 1; i--) {
@@ -78,7 +79,13 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         [temp exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
     }
     
-    self.patternTypes = [NSArray arrayWithArray:temp];
+        for (int i = 0; i < NUMBER_OF_CELLS; i++){
+            int oldIndex = i;
+            int newIndex = (int)[temp indexOfObject:_patternTypes[i]];
+            [self.towelCollectionView moveItemAtIndexPath:[NSIndexPath indexPathForItem:oldIndex inSection:0] toIndexPath:[NSIndexPath indexPathForItem:newIndex inSection:0]];
+        }
+    
+        self.patternTypes = [NSArray arrayWithArray:temp];
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout

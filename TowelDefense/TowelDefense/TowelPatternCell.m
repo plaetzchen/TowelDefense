@@ -8,16 +8,35 @@
 
 #import "TowelPatternCell.h"
 
+@interface TowelPatternCell ()
+
+@property (nonatomic, strong) UITapGestureRecognizer *gestureRecognizer;
+
+@end
+
 @implementation TowelPatternCell
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self commonInit];
     }
     return self;
 }
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self){
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)commonInit {
+
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

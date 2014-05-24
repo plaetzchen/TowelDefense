@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TowelPatternCell : UICollectionViewCell
+@interface TowelPatternCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *patternImageView;
+@property (nonatomic) BOOL touched;
 @end
