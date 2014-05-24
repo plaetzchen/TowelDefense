@@ -120,13 +120,13 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         if (self.touchedPatternsPlayerOne.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
             NSLog(@"player one won!");
-            [self setScoreStatus:_scoreStatus-1];
+            [self setScoreStatus:_scoreStatus+1];
             [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
         }
         if (self.touchedPatternsPlayerTwo.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
             NSLog(@"player two won!");
-            [self setScoreStatus:_scoreStatus+1];
+            [self setScoreStatus:_scoreStatus-1];
             [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
         }
     }
@@ -145,7 +145,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         [self.backgroundImage setFrame:CGRectMake(self.backgroundImage.frame.origin.x + (self.scoreStatus * 160), self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
+                         [self.backgroundImage setFrame:CGRectMake(-512 + (self.scoreStatus * 160), self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
                      }
                      completion:^(BOOL finished){
                          NSLog(@"Animation done");
