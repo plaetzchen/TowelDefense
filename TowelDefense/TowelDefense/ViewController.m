@@ -151,6 +151,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
             if(abs(self.scoreStatus) != 3){
                 [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
             }
+            [self playRoundWonSound];
         }
     }
 }
@@ -249,6 +250,10 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self.playerTwoTargetPatternImageView setImage:[UIImage imageNamed:_targetPatternPlayerTwo]];
     NSLog(@"Number of touches required %d, target pattern player one %@ target pattern player two %@",_numberOfTouchedCellsRequired,_targetPatternPlayerOne,_targetPatternPlayerTwo);
     
+    [self.playerOneTargetPatternView setAlpha:0];
+    [self.playerTwoTargetPatternView setAlpha:0];
+    [self.playerOneTargetPatternView setHidden:NO];
+    [self.playerTwoTargetPatternView setHidden:NO];
     [UIView animateWithDuration:0.5 animations:^{
         [self.playerOneTargetPatternView setAlpha:1.0];
         [self.playerTwoTargetPatternView setAlpha:1.0];
