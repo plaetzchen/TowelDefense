@@ -49,7 +49,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     self.touchedPatternsPlayerOne = [NSMutableArray array];
     self.touchedPatternsPlayerTwo = [NSMutableArray array];
     [self.towelCollectionView setBackgroundColor:[UIColor clearColor]];
-    
+    [self.towelCollectionView setScrollEnabled:NO];
     [self performSelector:@selector(startGame) withObject:nil afterDelay:5];
     [self setScoreStatus:0];
 }
@@ -187,7 +187,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(164, 164);
+    return CGSizeMake(160, 160);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -195,11 +195,11 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return 4;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return 8;
 }
 
 # pragma mark - IBActions
