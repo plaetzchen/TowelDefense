@@ -12,8 +12,6 @@
 @interface ViewController ()
 
 @property (nonatomic, strong) IBOutlet UICollectionView *towelCollectionView;
-@property (nonatomic, strong) IBOutlet UIView *playerOneInstructionView;
-@property (nonatomic, strong) IBOutlet UIView *playerTwoInstructionView;
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic) BOOL playing;
@@ -109,12 +107,12 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         if (self.touchedPatternsPlayerOne.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
             NSLog(@"player one won!");
-            [self setScoreStatus:_scoreStatus-1];
+            [self setScoreStatus:_scoreStatus+1];
         }
         if (self.touchedPatternsPlayerTwo.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
             NSLog(@"player two won!");
-            [self setScoreStatus:_scoreStatus+1];
+            [self setScoreStatus:_scoreStatus-1];
         }
     }
 }
@@ -128,7 +126,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         [self.backgroundImage setFrame:CGRectMake(self.scoreStatus * 96, self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
+                         [self.backgroundImage setFrame:CGRectMake(self.backgroundImage.frame.origin.x + (self.scoreStatus * 160), self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
                      }
                      completion:^(BOOL finished){
                          NSLog(@"Animation done");
@@ -182,12 +180,13 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 - (void)setScoreStatus:(int)scoreStatus {
     _scoreStatus = scoreStatus;
     NSLog(@"Score %d",scoreStatus);
+    [self moveBackground];
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(160, 160);
+    return CGSizeMake(146, 146);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
