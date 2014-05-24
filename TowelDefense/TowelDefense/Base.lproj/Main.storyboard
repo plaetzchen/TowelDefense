@@ -20,6 +20,10 @@
                                 <rect key="frame" x="-512" y="0.0" width="2048" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="towel" translatesAutoresizingMaskIntoConstraints="NO" id="Ihy-Zj-7zK">
+                                <rect key="frame" x="79" y="93" width="840" height="652"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FKh-v8-jIS">
                                 <rect key="frame" x="137" y="135" width="750" height="600"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -53,6 +57,7 @@
     </scenes>
     <resources>
         <image name="Background" width="2048" height="768"/>
+        <image name="towel" width="839" height="618"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
