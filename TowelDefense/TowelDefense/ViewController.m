@@ -67,6 +67,20 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     return cell;
 }
 
+# pragma mark - Game Logics
+
+- (void)shufflePatterns {
+    
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:_patternTypes];
+    
+    for(int i = (int)[temp count]; i > 1; i--) {
+        int j = arc4random_uniform(i);
+        [temp exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
+    }
+    
+    self.patternTypes = [NSArray arrayWithArray:temp];
+}
+
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,5 +97,11 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+# pragma mark - IBActions
+
+- (IBAction)startGameAction:(id)sender {
+    [self shufflePatterns];
 }
 @end
