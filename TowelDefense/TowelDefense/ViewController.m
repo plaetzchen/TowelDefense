@@ -14,8 +14,10 @@
 @property (nonatomic, strong) IBOutlet UICollectionView *towelCollectionView;
 @property (nonatomic, strong) IBOutlet UIView *playerOneInstructionView;
 @property (nonatomic, strong) IBOutlet UIView *playerTwoInstructionView;
+@property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic, strong) UITapGestureRecognizer *collectionViewTapRecognizer;
+@property (nonatomic) int scoreStatus;
 @end
 
 #define NUMBER_OF_CELLS NUMBER_OF_ROWS * NUMBER_OF_COLUMNS
@@ -76,6 +78,27 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 - (void)towelPatternCellDidChangeTouchState:(TowelPatternCell *)cell {
     NSLog(@"cell changed");
+}
+
+# pragma mark - Animations
+
+- (void)moveBackground{
+    
+    [UIView beginAnimations:@"MoveBackground" context:nil];
+    [UIView animateWithDuration:3.0
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self.backgroundImage setFrame:CGRectMake(self.scoreStatus * 96, self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         NSLog(@"Animation done");
+                     }];
+    [UIView commitAnimations];
+}
+
+- (void)pullTowel{
+    // Pull the towel towards the winner
 }
 
 # pragma mark - Game Logics
