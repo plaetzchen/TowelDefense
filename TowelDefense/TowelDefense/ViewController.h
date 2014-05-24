@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TowelPatternCellDelegate.h"
 
-@interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TowelPatternCellDelegate>
 
 @end
