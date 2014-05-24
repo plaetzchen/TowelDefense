@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) IBOutlet UICollectionView *towelCollectionView;
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
+@property (nonatomic, strong) IBOutlet UIImageView *towelBackgroundImage;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic) BOOL playing;
 @property (nonatomic, strong) NSMutableArray *touchedPatternsPlayerOne;

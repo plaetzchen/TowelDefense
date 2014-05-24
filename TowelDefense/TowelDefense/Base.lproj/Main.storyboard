@@ -47,6 +47,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="backgroundImage" destination="GIs-3F-qrI" id="gEu-Gp-UIi"/>
+                        <outlet property="towelBackgroundImage" destination="Ihy-Zj-7zK" id="AuJ-6L-VXE"/>
                         <outlet property="towelCollectionView" destination="FKh-v8-jIS" id="S53-MY-pao"/>
                     </connections>
                 </viewController>
