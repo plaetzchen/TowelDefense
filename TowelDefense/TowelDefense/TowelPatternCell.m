@@ -38,10 +38,14 @@
 }
 
 - (void)setTouched:(BOOL)touched {
-    _touched = touched;
-    NSLog(@"Touched %@",touched ? @"YES" : @"NO");
-    [self.patternImageView setAlpha:touched ? 0.5 : 1.0];
-    [self.delegate towelPatternCellDidChangeTouchState:self];
+    if ([self.delegate towelPatternCellIsCellTappable:self]) {
+        _touched = touched;
+        NSLog(@"Touched %@",touched ? @"YES" : @"NO");
+        [self.delegate towelPatternCellDidChangeTouchState:self];
+        [self.patternImageView setAlpha:touched ? 0.5 : 1.0];
+    } else {
+        [self.patternImageView setAlpha:1.0];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

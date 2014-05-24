@@ -16,6 +16,13 @@
 @property (nonatomic, strong) IBOutlet UIImageView *towelBackgroundImage;
 @property (nonatomic, strong) IBOutlet UIImageView *smileyFace;
 @property (nonatomic, strong) IBOutlet UIImageView *yayText;
+@property (nonatomic, strong) IBOutlet UIButton *startButton;
+@property (nonatomic, strong) IBOutlet UIView *playerOneTargetPatternView;
+@property (nonatomic ,strong) IBOutlet UIView *playerTwoTargetPatternView;
+@property (nonatomic, strong) IBOutlet UILabel *playerOneTargetTapsLabel;
+@property (nonatomic, strong) IBOutlet UILabel *playerTwoTargetTapsLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *playerOneTargetPatternImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *playerTwoTargetPatternImageView;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic) BOOL playing;
 @property (nonatomic, strong) NSMutableArray *touchedPatternsPlayerOne;
@@ -25,11 +32,14 @@
 @property (nonatomic) NSString *targetPatternPlayerTwo;
 @property (nonatomic) int scoreStatus;
 
+- (IBAction)startButtonAction:(id)sender;
 @end
 
 #define NUMBER_OF_CELLS NUMBER_OF_ROWS * NUMBER_OF_COLUMNS
 #define NUMBER_OF_ROWS 4
 #define NUMBER_OF_COLUMNS 5
+#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
+
 static NSString *cellIdentifer = @"TowelPatternCell";
 
 @implementation ViewController
@@ -51,7 +61,8 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     self.touchedPatternsPlayerTwo = [NSMutableArray array];
     [self.towelCollectionView setBackgroundColor:[UIColor clearColor]];
     [self.towelCollectionView setScrollEnabled:NO];
-    [self performSelector:@selector(startGame) withObject:nil afterDelay:5];
+    self.playerOneTargetPatternView.transform = CGAffineTransformRotate(_playerOneTargetPatternView.transform, RADIANS(90));
+    self.playerTwoTargetPatternView.transform = CGAffineTransformRotate(_playerTwoTargetPatternView.transform, RADIANS(270));
     [self setScoreStatus:0];
     
     self.smileyFace = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smile"]];
@@ -62,11 +73,6 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     
     [self.view addSubview:self.yayText];
     [self.yayText setAlpha:0.0];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [self setScoreStatus:3];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -125,13 +131,23 @@ static NSString *cellIdentifer = @"TowelPatternCell";
             self.playing = NO;
             NSLog(@"player one won!");
             [self setScoreStatus:_scoreStatus+1];
+            if(abs(self.scoreStatus) != 3){
+                [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
+            }
         }
         if (self.touchedPatternsPlayerTwo.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
             NSLog(@"player two won!");
             [self setScoreStatus:_scoreStatus-1];
+            if(abs(self.scoreStatus) != 3){
+                [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
+            }
         }
     }
+}
+
+- (BOOL)towelPatternCellIsCellTappable:(TowelPatternCell *)cell {
+    return self.playing;
 }
 
 # pragma mark - Animations
@@ -143,7 +159,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         [self.backgroundImage setFrame:CGRectMake(self.backgroundImage.frame.origin.x + (self.scoreStatus * 160), self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
+                         [self.backgroundImage setFrame:CGRectMake(-512 + (self.scoreStatus * 160), self.backgroundImage.frame.origin.y, self.backgroundImage.frame.size.width, self.backgroundImage.frame.size.height)];
                      }
                      completion:^(BOOL finished){
                          NSLog(@"Animation done");
@@ -155,40 +171,47 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     
     NSLog(@"PULLING THE TOWEL");
     
+    [self.towelCollectionView setAlpha:0];
     [UIView animateWithDuration:2.0
                           delay:5.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         [self.towelBackgroundImage setFrame:CGRectMake(self.towelBackgroundImage.frame.origin.x + self.scoreStatus * 150, self.towelBackgroundImage.frame.origin.y, self.towelBackgroundImage.frame.size.width, self.towelBackgroundImage.frame.size.height)];
+                         [self.towelBackgroundImage setFrame:CGRectMake(self.towelBackgroundImage.frame.origin.x + self.scoreStatus * -150, self.towelBackgroundImage.frame.origin.y, self.towelBackgroundImage.frame.size.width, self.towelBackgroundImage.frame.size.height)];
                      }
                      completion:^(BOOL finished){
                          [self drawEndScreenObjects];
+                         [self performSelector:@selector(resetGame) withObject:nil afterDelay:3];
                      }];
+}
+
+- (void)resetTowel
+{
+    [self.towelBackgroundImage setFrame:CGRectMake(79, self.towelBackgroundImage.frame.origin.y, self.towelBackgroundImage.frame.size.width, self.towelBackgroundImage.frame.size.height)];
 }
 
 - (void)drawEndScreenObjects{
     
-    if(self.scoreStatus > 0){
+    if(self.scoreStatus < 0){
         [self.smileyFace setFrame:CGRectMake(self.view.frame.size.width - 100,334, self.smileyFace.frame.size.width, self.smileyFace.frame.size.height)];
         self.smileyFace.transform = CGAffineTransformMakeRotation(-M_PI/2);
         
-        [self.yayText setFrame:CGRectMake(self.view.frame.size.width/2,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
         self.yayText.transform = CGAffineTransformMakeRotation(-M_PI/2);
+        [self.yayText setFrame:CGRectMake(256,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
+        
     }
     else{
         [self.smileyFace setFrame:CGRectMake(100,340, self.smileyFace.frame.size.width, self.smileyFace.frame.size.height)];
         self.smileyFace.transform = CGAffineTransformMakeRotation(M_PI/2);
         
-        [self.yayText setFrame:CGRectMake(self.view.frame.size.width/2,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
-        
         self.yayText.transform = CGAffineTransformMakeRotation(M_PI/2);
+        [self.yayText setFrame:CGRectMake(512,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
     }
-    
     [self.smileyFace setAlpha:1.0];
     [self.yayText setAlpha:1.0];
 }
 
 - (void)hideEndScreenObjects{
+    [self.towelCollectionView setAlpha:1];
     [self.smileyFace setAlpha:0.0];
     [self.yayText setAlpha:0.0];
 }
@@ -196,22 +219,100 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 # pragma mark - Game Logics
 
 - (void)startGame {
-    [self setPlaying:YES];
+    [self shufflePatterns];
+    #ifdef TARGET_IPHONE_SIMULATOR
+    self.numberOfTouchedCellsRequired = 1;
+    #else
     self.numberOfTouchedCellsRequired = 1 + (arc4random_uniform(4));
+    #endif
+    [self.playerOneTargetTapsLabel setText:[NSString stringWithFormat:@"%d",_numberOfTouchedCellsRequired]];
+    [self.playerTwoTargetTapsLabel setText:[NSString stringWithFormat:@"%d",_numberOfTouchedCellsRequired]];
     self.targetPatternPlayerOne = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
     self.targetPatternPlayerTwo = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
     // Make shure they are not the same;
     while ([_targetPatternPlayerOne isEqualToString: _targetPatternPlayerTwo]) {
         self.targetPatternPlayerTwo = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
     }
-    [self shufflePatterns];
+    [self.playerOneTargetPatternImageView setImage:[UIImage imageNamed:_targetPatternPlayerOne]];
+    [self.playerTwoTargetPatternImageView setImage:[UIImage imageNamed:_targetPatternPlayerTwo]];
     NSLog(@"Number of touches required %d, target pattern player one %@ target pattern player two %@",_numberOfTouchedCellsRequired,_targetPatternPlayerOne,_targetPatternPlayerTwo);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.playerOneTargetPatternView setAlpha:1.0];
+        [self.playerTwoTargetPatternView setAlpha:1.0];
+        [self.startButton setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [self.startButton setHidden:YES];
+        
+    }];
+     
+    [UIView animateWithDuration:0.5 delay:3 options:0 animations:^{
+        [self.playerOneTargetPatternView setAlpha:0];
+        [self.playerTwoTargetPatternView setAlpha:0];
+        [self.towelCollectionView setAlpha:1];
+     } completion:^(BOOL finished) {
+         [self.playerOneTargetPatternView setHidden:YES];
+         [self.playerTwoTargetPatternView setHidden:YES];
+         [self setPlaying:YES];
+     }];
 }
 
 - (void)resetGame {
+    [self resetTowel];
+    [self hideEndScreenObjects];
+    [self setScoreStatus:0];
+    [self resetRound];
     [self setPlaying:NO];
     [self.touchedPatternsPlayerOne removeAllObjects];
     [self.touchedPatternsPlayerTwo removeAllObjects];
+}
+
+- (void)resetRound {
+    [self.touchedPatternsPlayerOne removeAllObjects];
+    [self.touchedPatternsPlayerTwo removeAllObjects];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.towelCollectionView setAlpha:0];
+    } completion:^(BOOL finished) {
+            [self shufflePatterns];
+            #ifdef TARGET_IPHONE_SIMULATOR
+            self.numberOfTouchedCellsRequired = 1;
+            #else
+            self.numberOfTouchedCellsRequired = 1 + (arc4random_uniform(4));
+            #endif
+            [self.playerOneTargetTapsLabel setText:[NSString stringWithFormat:@"%d",_numberOfTouchedCellsRequired]];
+            [self.playerTwoTargetTapsLabel setText:[NSString stringWithFormat:@"%d",_numberOfTouchedCellsRequired]];
+            self.targetPatternPlayerOne = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
+            self.targetPatternPlayerTwo = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
+            // Make shure they are not the same;
+            while ([_targetPatternPlayerOne isEqualToString: _targetPatternPlayerTwo]) {
+                self.targetPatternPlayerTwo = [NSString stringWithFormat:@"pattern_%d",arc4random_uniform(NUMBER_OF_COLUMNS)];
+            }
+            [self.playerOneTargetPatternImageView setImage:[UIImage imageNamed:_targetPatternPlayerOne]];
+            [self.playerTwoTargetPatternImageView setImage:[UIImage imageNamed:_targetPatternPlayerTwo]];
+            NSLog(@"Number of touches required %d, target pattern player one %@ target pattern player two %@",_numberOfTouchedCellsRequired,_targetPatternPlayerOne,_targetPatternPlayerTwo);
+
+    }];
+    [self.playerOneTargetPatternView setAlpha:0];
+    [self.playerTwoTargetPatternView setAlpha:0];
+    [self.playerOneTargetPatternView setHidden:NO];
+    [self.playerTwoTargetPatternView setHidden:NO];
+    [UIView animateWithDuration:0.5 delay:1 options:0 animations:^{
+        [self.playerOneTargetPatternView setAlpha:1.0];
+        [self.playerTwoTargetPatternView setAlpha:1.0];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    [UIView animateWithDuration:0.5 delay:3 options:0 animations:^{
+        [self.playerOneTargetPatternView setAlpha:0];
+        [self.playerTwoTargetPatternView setAlpha:0];
+        [self.towelCollectionView setAlpha:1];
+    } completion:^(BOOL finished) {
+        [self.playerOneTargetPatternView setHidden:YES];
+        [self.playerTwoTargetPatternView setHidden:YES];
+        [self setPlaying:YES];
+    }];
+
 }
 
 - (void)shufflePatterns {
@@ -237,7 +338,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     NSLog(@"Score %d",scoreStatus);
     [self moveBackground];
     
-    if(abs(self.scoreStatus == 3))
+    if(abs(self.scoreStatus) == 3)
     {
         [self pullTowel];
     }
@@ -263,8 +364,8 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 # pragma mark - IBActions
 
-- (IBAction)startGameAction:(id)sender {
-    [self shufflePatterns];
+- (IBAction)startButtonAction:(id)sender {
+    [self startGame];
 }
 
 

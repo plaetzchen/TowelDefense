@@ -12,5 +12,5 @@
 @protocol TowelPatternCellDelegate <NSObject>
 
 - (void)towelPatternCellDidChangeTouchState:(TowelPatternCell *)cell;
-
+- (BOOL)towelPatternCellIsCellTappable:(TowelPatternCell *)cell;
 @end
