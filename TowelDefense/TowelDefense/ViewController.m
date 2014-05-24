@@ -14,6 +14,8 @@
 @property (nonatomic, strong) IBOutlet UICollectionView *towelCollectionView;
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic, strong) IBOutlet UIImageView *towelBackgroundImage;
+@property (nonatomic, strong) IBOutlet UIImageView *smileyFace;
+@property (nonatomic, strong) IBOutlet UIImageView *yayText;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic) BOOL playing;
 @property (nonatomic, strong) NSMutableArray *touchedPatternsPlayerOne;
@@ -51,6 +53,20 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self.towelCollectionView setScrollEnabled:NO];
     [self performSelector:@selector(startGame) withObject:nil afterDelay:5];
     [self setScoreStatus:0];
+    
+    self.smileyFace = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smile"]];
+    self.yayText = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yay"]];
+    
+    [self.view addSubview:self.smileyFace];
+    [self.smileyFace setAlpha:0.0];
+    
+    [self.view addSubview:self.yayText];
+    [self.yayText setAlpha:0.0];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self setScoreStatus:3];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -122,8 +138,8 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 - (void)moveBackground{
     
-    [UIView beginAnimations:@"MoveBackground" context:nil];
-    [UIView animateWithDuration:3.0
+    //[UIView beginAnimations:@"MoveBackground" context:nil];
+    [UIView animateWithDuration:5.0
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
@@ -132,11 +148,49 @@ static NSString *cellIdentifer = @"TowelPatternCell";
                      completion:^(BOOL finished){
                          NSLog(@"Animation done");
                      }];
-    [UIView commitAnimations];
+    //[UIView commitAnimations];
 }
 
 - (void)pullTowel{
-    // Pull the towel towards the winner
+    
+    NSLog(@"PULLING THE TOWEL");
+    
+    [UIView animateWithDuration:2.0
+                          delay:5.0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self.towelBackgroundImage setFrame:CGRectMake(self.towelBackgroundImage.frame.origin.x + self.scoreStatus * 150, self.towelBackgroundImage.frame.origin.y, self.towelBackgroundImage.frame.size.width, self.towelBackgroundImage.frame.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         [self drawEndScreenObjects];
+                     }];
+}
+
+- (void)drawEndScreenObjects{
+    
+    if(self.scoreStatus > 0){
+        [self.smileyFace setFrame:CGRectMake(self.view.frame.size.width - 100,334, self.smileyFace.frame.size.width, self.smileyFace.frame.size.height)];
+        self.smileyFace.transform = CGAffineTransformMakeRotation(-M_PI/2);
+        
+        [self.yayText setFrame:CGRectMake(self.view.frame.size.width/2,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
+        self.yayText.transform = CGAffineTransformMakeRotation(-M_PI/2);
+    }
+    else{
+        [self.smileyFace setFrame:CGRectMake(100,340, self.smileyFace.frame.size.width, self.smileyFace.frame.size.height)];
+        self.smileyFace.transform = CGAffineTransformMakeRotation(M_PI/2);
+        
+        [self.yayText setFrame:CGRectMake(self.view.frame.size.width/2,340, self.yayText.frame.size.width, self.yayText.frame.size.height)];
+        
+        self.yayText.transform = CGAffineTransformMakeRotation(M_PI/2);
+    }
+    
+    [self.smileyFace setAlpha:1.0];
+    [self.yayText setAlpha:1.0];
+}
+
+- (void)hideEndScreenObjects{
+    [self.smileyFace setAlpha:0.0];
+    [self.yayText setAlpha:0.0];
 }
 
 # pragma mark - Game Logics
@@ -182,6 +236,11 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     _scoreStatus = scoreStatus;
     NSLog(@"Score %d",scoreStatus);
     [self moveBackground];
+    
+    if(abs(self.scoreStatus == 3))
+    {
+        [self pullTowel];
+    }
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout
