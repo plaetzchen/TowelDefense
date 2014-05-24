@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UIView *playerOneInstructionView;
 @property (nonatomic, strong) IBOutlet UIView *playerTwoInstructionView;
 @property (nonatomic, strong) NSArray *patternTypes;
+@property (nonatomic, strong) UITapGestureRecognizer *collectionViewTapRecognizer;
 @end
 
 #define NUMBER_OF_CELLS NUMBER_OF_ROWS * NUMBER_OF_COLUMNS
@@ -50,7 +51,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - UICollectionViewDelegate
+# pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return _patternTypes.count;
 }
@@ -65,8 +66,16 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     
     NSString *patternName = self.patternTypes[indexPath.row];
     
+    cell.delegate = self;
+    
     [cell.patternImageView setImage:[UIImage imageNamed:patternName]];
     return cell;
+}
+
+# pragma mark - TowelPatternCellDelegate
+
+- (void)towelPatternCellDidChangeTouchState:(TowelPatternCell *)cell {
+    NSLog(@"cell changed");
 }
 
 # pragma mark - Game Logics
@@ -111,4 +120,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 - (IBAction)startGameAction:(id)sender {
     [self shufflePatterns];
 }
+
+
+
 @end

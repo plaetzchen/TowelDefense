@@ -37,14 +37,24 @@
 
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (void)setTouched:(BOOL)touched {
+    _touched = touched;
+    NSLog(@"Touched %@",touched ? @"YES" : @"NO");
+    [self.patternImageView setAlpha:touched ? 0.5 : 1.0];
+    [self.delegate towelPatternCellDidChangeTouchState:self];
 }
-*/
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self setTouched:YES];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self setTouched:NO];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self setTouched:NO];
+}
+
 
 @end

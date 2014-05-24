@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FDA395671930DD9500E11DCD /* TowelPatternCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TowelPatternCellDelegate.h; sourceTree = "<group>"; };
 		FDB3EDC21930C15C00EDB996 /* TowelDefense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TowelDefense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB3EDC51930C15C00EDB996 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDB3EDC71930C15C00EDB996 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,6 +166,7 @@
 			children = (
 				FDB3EDFA1930C43100EDB996 /* TowelPatternCell.h */,
 				FDB3EDFB1930C43100EDB996 /* TowelPatternCell.m */,
+				FDA395671930DD9500E11DCD /* TowelPatternCellDelegate.h */,
 				FDB3EDFF1930C45100EDB996 /* TowelPatternCell.xib */,
 			);
 			name = Cells;
@@ -480,6 +482,7 @@
 				FDB3EDF61930C15D00EDB996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FDB3EDF71930C15D00EDB996 /* Build configuration list for PBXNativeTarget "TowelDefenseTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +491,7 @@
 				FDB3EDF91930C15D00EDB996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
