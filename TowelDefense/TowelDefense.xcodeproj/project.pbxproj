@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FDA39569193115C500E11DCD /* background.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FDA39568193115C500E11DCD /* background.aiff */; };
+		FDA3956B1931194900E11DCD /* ja.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FDA3956A1931194900E11DCD /* ja.aiff */; };
+		FDA3956D1931195800E11DCD /* yeah.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FDA3956C1931195800E11DCD /* yeah.aiff */; };
 		FDB3EDC61930C15C00EDB996 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB3EDC51930C15C00EDB996 /* Foundation.framework */; };
 		FDB3EDC81930C15C00EDB996 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB3EDC71930C15C00EDB996 /* CoreGraphics.framework */; };
 		FDB3EDCA1930C15C00EDB996 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB3EDC91930C15C00EDB996 /* UIKit.framework */; };
@@ -39,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		FDA395671930DD9500E11DCD /* TowelPatternCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TowelPatternCellDelegate.h; sourceTree = "<group>"; };
+		FDA39568193115C500E11DCD /* background.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = background.aiff; sourceTree = "<group>"; };
+		FDA3956A1931194900E11DCD /* ja.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = ja.aiff; sourceTree = "<group>"; };
+		FDA3956C1931195800E11DCD /* yeah.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = yeah.aiff; sourceTree = "<group>"; };
 		FDB3EDC21930C15C00EDB996 /* TowelDefense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TowelDefense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB3EDC51930C15C00EDB996 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDB3EDC71930C15C00EDB996 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,6 +126,9 @@
 		FDB3EDCB1930C15C00EDB996 /* TowelDefense */ = {
 			isa = PBXGroup;
 			children = (
+				FDA3956C1931195800E11DCD /* yeah.aiff */,
+				FDA3956A1931194900E11DCD /* ja.aiff */,
+				FDA39568193115C500E11DCD /* background.aiff */,
 				FDB3EDD41930C15C00EDB996 /* AppDelegate.h */,
 				FDB3EDD51930C15C00EDB996 /* AppDelegate.m */,
 				FDB3EDD71930C15C00EDB996 /* Main.storyboard */,
@@ -248,9 +257,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA3956B1931194900E11DCD /* ja.aiff in Resources */,
 				FDB3EDDE1930C15C00EDB996 /* Images.xcassets in Resources */,
 				FDB3EDD01930C15C00EDB996 /* InfoPlist.strings in Resources */,
 				FDB3EE001930C45100EDB996 /* TowelPatternCell.xib in Resources */,
+				FDA39569193115C500E11DCD /* background.aiff in Resources */,
+				FDA3956D1931195800E11DCD /* yeah.aiff in Resources */,
 				FDB3EDD91930C15C00EDB996 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

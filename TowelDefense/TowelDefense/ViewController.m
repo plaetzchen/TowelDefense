@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "TowelPatternCell.h"
 
+@import AVFoundation;
+
 @interface ViewController ()
 
 @property (nonatomic, strong) IBOutlet UICollectionView *towelCollectionView;
@@ -31,6 +33,7 @@
 @property (nonatomic) NSString *targetPatternPlayerOne;
 @property (nonatomic) NSString *targetPatternPlayerTwo;
 @property (nonatomic) int scoreStatus;
+@property (nonatomic, strong) AVAudioPlayer *backgroundMusicPlayer;
 
 - (IBAction)startButtonAction:(id)sender;
 @end
@@ -73,6 +76,11 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     
     [self.view addSubview:self.yayText];
     [self.yayText setAlpha:0.0];
+    self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"aiff"]] error:nil];
+    [self.backgroundMusicPlayer setNumberOfLoops:-1];
+    [self.backgroundMusicPlayer prepareToPlay];
+    [self.backgroundMusicPlayer setVolume:0.2];
+    [self.backgroundMusicPlayer play];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -134,6 +142,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
             if(abs(self.scoreStatus) != 3){
                 [self performSelector:@selector(resetRound) withObject:nil afterDelay:1];
             }
+            [self playRoundWonSound];
         }
         if (self.touchedPatternsPlayerTwo.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
@@ -193,6 +202,8 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 - (void)drawEndScreenObjects{
     
+    [self playGameOverSound];
+
     if(self.scoreStatus < 0){
         [self.smileyFace setFrame:CGRectMake(self.view.frame.size.width - 100,334, self.smileyFace.frame.size.width, self.smileyFace.frame.size.height)];
         self.smileyFace.transform = CGAffineTransformMakeRotation(-M_PI/2);
@@ -223,6 +234,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 # pragma mark - Game Logics
 
 - (void)startGame {
+    [self.backgroundMusicPlayer setVolume:0.5];
     [self shufflePatterns];
     self.numberOfTouchedCellsRequired = 1 + (arc4random_uniform(4));
     [self.playerOneTargetTapsLabel setText:[NSString stringWithFormat:@"%d",_numberOfTouchedCellsRequired]];
@@ -266,10 +278,10 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self.startButton setHidden:NO];
     [self.touchedPatternsPlayerOne removeAllObjects];
     [self.touchedPatternsPlayerTwo removeAllObjects];
+    [self.backgroundMusicPlayer setVolume:0.2];
     [UIView animateWithDuration:0.5 delay:2 options:0 animations:^{
         [self.startButton setAlpha:1];
     } completion:^(BOOL finished) {
-        
     }];
 }
 
@@ -370,6 +382,21 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self startGame];
 }
 
+# pragma mark - Sounds
+
+- (void)playRoundWonSound {
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"ja" ofType:@"aiff"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+    AudioServicesPlaySystemSound (soundID);
+}
+
+- (void)playGameOverSound {
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"yeah" ofType:@"aiff"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+    AudioServicesPlaySystemSound (soundID);
+}
 
 
 @end
