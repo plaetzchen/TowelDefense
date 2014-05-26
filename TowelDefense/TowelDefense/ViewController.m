@@ -25,6 +25,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *playerTwoTargetTapsLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *playerOneTargetPatternImageView;
 @property (nonatomic, strong) IBOutlet UIImageView *playerTwoTargetPatternImageView;
+@property (nonatomic ,strong) IBOutlet UILabel *creditsLabel;
 @property (nonatomic, strong) NSArray *patternTypes;
 @property (nonatomic) BOOL playing;
 @property (nonatomic, strong) NSMutableArray *touchedPatternsPlayerOne;
@@ -258,8 +259,10 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         [self.playerOneTargetPatternView setAlpha:1.0];
         [self.playerTwoTargetPatternView setAlpha:1.0];
         [self.startButton setAlpha:0.0];
+        [self.creditsLabel setAlpha:0.0];
     } completion:^(BOOL finished) {
         [self.startButton setHidden:YES];
+        [self.creditsLabel setHidden:YES];
         
     }];
      
@@ -280,12 +283,15 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self setScoreStatus:0];
     [self setPlaying:NO];
     [self.startButton setAlpha:0];
+    [self.creditsLabel setAlpha:0];
     [self.startButton setHidden:NO];
+    [self.creditsLabel setHidden:NO];
     [self.touchedPatternsPlayerOne removeAllObjects];
     [self.touchedPatternsPlayerTwo removeAllObjects];
     [self.backgroundMusicPlayer setVolume:0.2];
     [UIView animateWithDuration:0.5 delay:2 options:0 animations:^{
         [self.startButton setAlpha:1];
+        [self.creditsLabel setAlpha:1];
     } completion:^(BOOL finished) {
     }];
 }

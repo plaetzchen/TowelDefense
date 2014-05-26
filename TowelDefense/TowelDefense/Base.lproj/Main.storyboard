@@ -85,6 +85,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Made by Peter Amende, Philip Brechler &amp; Rauno Järvinen • Music by Jaque Kilauea " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KoX-CL-u5V">
+                                <rect key="frame" x="457" y="717" width="547" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -93,6 +100,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="backgroundImage" destination="GIs-3F-qrI" id="gEu-Gp-UIi"/>
+                        <outlet property="creditsLabel" destination="KoX-CL-u5V" id="FAb-d7-i9B"/>
                         <outlet property="playerOneTargetPatternImageView" destination="qkV-5t-7Um" id="kpA-dF-wgv"/>
                         <outlet property="playerOneTargetPatternView" destination="H7g-Ws-xFZ" id="x3y-aw-hKq"/>
                         <outlet property="playerOneTargetTapsLabel" destination="URr-x5-5be" id="Q4X-RN-alL"/>
