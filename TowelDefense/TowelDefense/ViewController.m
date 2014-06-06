@@ -18,7 +18,11 @@
 @property (nonatomic, strong) IBOutlet UIImageView *towelBackgroundImage;
 @property (nonatomic, strong) IBOutlet UIImageView *smileyFace;
 @property (nonatomic, strong) IBOutlet UIImageView *yayText;
+@property (nonatomic, strong) IBOutlet UIImageView *photo1;
+@property (nonatomic, strong) IBOutlet UIImageView *photo2;
+@property (nonatomic, strong) IBOutlet UIImageView *photo3;
 @property (nonatomic, strong) IBOutlet UIButton *startButton;
+@property (nonatomic, strong) IBOutlet UIButton *infoButton;
 @property (nonatomic, strong) IBOutlet UIView *playerOneTargetPatternView;
 @property (nonatomic ,strong) IBOutlet UIView *playerTwoTargetPatternView;
 @property (nonatomic, strong) IBOutlet UILabel *playerOneTargetTapsLabel;
@@ -70,13 +74,25 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self setScoreStatus:0];
     
     self.smileyFace = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smile"]];
-    self.yayText = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yay"]];
-    
     [self.view addSubview:self.smileyFace];
     [self.smileyFace setAlpha:0.0];
     
+    self.yayText = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yay"]];
     [self.view addSubview:self.yayText];
     [self.yayText setAlpha:0.0];
+    
+    self.photo1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo1"]];
+    [self.view addSubview:self.photo1];
+    [self.photo1 setAlpha:0.0];
+    self.photo2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo2"]];
+    [self.view addSubview:self.photo2];
+    [self.photo2 setAlpha:0.0];
+    self.photo3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo3"]];
+    [self.view addSubview:self.photo3];
+    [self.photo3 setAlpha:0.0];
+    
+    
+    
     self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"aiff"]] error:nil];
     [self.backgroundMusicPlayer setNumberOfLoops:-1];
     [self.backgroundMusicPlayer prepareToPlay];
@@ -259,9 +275,11 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         [self.playerOneTargetPatternView setAlpha:1.0];
         [self.playerTwoTargetPatternView setAlpha:1.0];
         [self.startButton setAlpha:0.0];
+        [self.infoButton setAlpha:0.0];
         [self.creditsLabel setAlpha:0.0];
     } completion:^(BOOL finished) {
         [self.startButton setHidden:YES];
+        [self.infoButton setHidden:YES];
         [self.creditsLabel setHidden:YES];
         
     }];
@@ -283,14 +301,17 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     [self setScoreStatus:0];
     [self setPlaying:NO];
     [self.startButton setAlpha:0];
+    [self.infoButton setAlpha:0];
     [self.creditsLabel setAlpha:0];
     [self.startButton setHidden:NO];
+    [self.infoButton setHidden:NO];
     [self.creditsLabel setHidden:NO];
     [self.touchedPatternsPlayerOne removeAllObjects];
     [self.touchedPatternsPlayerTwo removeAllObjects];
     [self.backgroundMusicPlayer setVolume:0.2];
     [UIView animateWithDuration:0.5 delay:2 options:0 animations:^{
         [self.startButton setAlpha:1];
+        [self.infoButton setAlpha:1];
         [self.creditsLabel setAlpha:1];
     } completion:^(BOOL finished) {
     }];
@@ -369,6 +390,70 @@ static NSString *cellIdentifer = @"TowelPatternCell";
     }
 }
 
+#pragma mark – Info view logic
+
+- (void)showInfoView {
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.startButton setAlpha:0.0];
+        [self.infoButton setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [self.startButton setHidden:YES];
+        [self.infoButton setHidden:YES];
+        [self.photo1 setHidden:NO];
+        [self.photo2 setHidden:NO];
+        [self.photo3 setHidden:NO];
+    }];
+    
+    self.photo1.transform = CGAffineTransformMakeRotation(-M_PI/2);
+    [self.photo1 setFrame:CGRectMake(250,500, self.photo1.frame.size.width, self.photo1.frame.size.height)];
+    
+    [UIView animateWithDuration:1.5 delay:1 options:0 animations:^{
+        [self.photo1 setAlpha:1.0];
+        [self.photo1 setFrame:CGRectMake(150,300,self.photo1.frame.size.width, self.photo1.frame.size.height)];
+        self.photo1.transform = CGAffineTransformMakeRotation(-M_PI/12);
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    self.photo2.transform = CGAffineTransformMakeRotation(-M_PI/2);
+    [self.photo2 setFrame:CGRectMake(250,500, self.photo2.frame.size.width, self.photo2.frame.size.height)];
+    
+    [UIView animateWithDuration:1.5 delay:3.5 options:0 animations:^{
+        [self.photo2 setAlpha:1.0];
+        [self.photo2 setFrame:CGRectMake(300,300,self.photo2.frame.size.width, self.photo2.frame.size.height)];
+        self.photo2.transform = CGAffineTransformMakeRotation(-M_PI/16);
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    self.photo3.transform = CGAffineTransformMakeRotation(-M_PI/2);
+    [self.photo3 setFrame:CGRectMake(250,500, self.photo3.frame.size.width, self.photo3.frame.size.height)];
+    
+    [UIView animateWithDuration:1.5 delay:6 options:0 animations:^{
+        [self.photo3 setAlpha:1.0];
+        [self.photo3 setFrame:CGRectMake(500,300,self.photo3.frame.size.width, self.photo3.frame.size.height)];
+        self.photo3.transform = CGAffineTransformMakeRotation(M_PI/18);
+    } completion:^(BOOL finished) {
+        [self hideInfoView];
+    }];
+}
+
+- (void)hideInfoView {
+    [UIView animateWithDuration:0.5 delay:2 options:0 animations:^{
+        [self.startButton setAlpha:1.0];
+        [self.infoButton setAlpha:1.0];
+        [self.photo1 setAlpha:0.0];
+        [self.photo2 setAlpha:0.0];
+        [self.photo3 setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [self.startButton setHidden:NO];
+        [self.infoButton setHidden:NO];
+        [self.photo1 setHidden:YES];
+        [self.photo2 setHidden:YES];
+        [self.photo3 setHidden:YES];
+    }];
+}
+
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -391,6 +476,10 @@ static NSString *cellIdentifer = @"TowelPatternCell";
 
 - (IBAction)startButtonAction:(id)sender {
     [self startGame];
+}
+
+- (IBAction)infoButtonAction:(id)sender {
+    [self showInfoView];
 }
 
 # pragma mark - Sounds

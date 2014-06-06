@@ -49,6 +49,16 @@
                                     <action selector="startButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6w0-8s-6VJ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scD-pj-KfF">
+                                <rect key="frame" x="405" y="502" width="215" height="118"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="btn-start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="infoButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YxK-qg-fdj"/>
+                                </connections>
+                            </button>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H7g-Ws-xFZ">
                                 <rect key="frame" x="211" y="362" width="146" height="146"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -101,6 +111,7 @@
                     <connections>
                         <outlet property="backgroundImage" destination="GIs-3F-qrI" id="gEu-Gp-UIi"/>
                         <outlet property="creditsLabel" destination="KoX-CL-u5V" id="FAb-d7-i9B"/>
+                        <outlet property="infoButton" destination="scD-pj-KfF" id="Qh0-hv-ul9"/>
                         <outlet property="playerOneTargetPatternImageView" destination="qkV-5t-7Um" id="kpA-dF-wgv"/>
                         <outlet property="playerOneTargetPatternView" destination="H7g-Ws-xFZ" id="x3y-aw-hKq"/>
                         <outlet property="playerOneTargetTapsLabel" destination="URr-x5-5be" id="Q4X-RN-alL"/>
