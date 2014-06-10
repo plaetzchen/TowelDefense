@@ -28,6 +28,7 @@
 		FDB3EDFD1930C43100EDB996 /* TowelPatternCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3EDFB1930C43100EDB996 /* TowelPatternCell.m */; };
 		FDB3EE001930C45100EDB996 /* TowelPatternCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDB3EDFF1930C45100EDB996 /* TowelPatternCell.xib */; };
 		FDB3EE011930C45100EDB996 /* TowelPatternCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDB3EDFF1930C45100EDB996 /* TowelPatternCell.xib */; };
+		FDC25E961947650500AC4AC7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDB3EDDD1930C15C00EDB996 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC25E961947650500AC4AC7 /* Images.xcassets in Resources */,
 				FDB3EE011930C45100EDB996 /* TowelPatternCell.xib in Resources */,
 				FDB3EDEF1930C15D00EDB996 /* InfoPlist.strings in Resources */,
 			);
