@@ -39,6 +39,7 @@
 @property (nonatomic) NSString *targetPatternPlayerTwo;
 @property (nonatomic) int scoreStatus;
 @property (nonatomic, strong) AVAudioPlayer *backgroundMusicPlayer;
+@property (nonatomic, strong) NSTimer *roundTimer;
 
 - (IBAction)startButtonAction:(id)sender;
 @end
@@ -47,6 +48,8 @@
 #define NUMBER_OF_ROWS 4
 #define NUMBER_OF_COLUMNS 5
 #define RADIANS(degrees) ((degrees * M_PI) / 180.0)
+
+#define ROUND_LENGTH 10
 
 static NSString *cellIdentifer = @"TowelPatternCell";
 
@@ -154,6 +157,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         }
         if (self.touchedPatternsPlayerOne.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
+            [self stopRoundTimer];
             NSLog(@"player one won!");
             [self setScoreStatus:_scoreStatus+1];
             if(abs(self.scoreStatus) != 3){
@@ -163,6 +167,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         }
         if (self.touchedPatternsPlayerTwo.count == self.numberOfTouchedCellsRequired){
             self.playing = NO;
+            [self stopRoundTimer];
             NSLog(@"player two won!");
             [self setScoreStatus:_scoreStatus-1];
             if(abs(self.scoreStatus) != 3){
@@ -292,7 +297,17 @@ static NSString *cellIdentifer = @"TowelPatternCell";
          [self.playerOneTargetPatternView setHidden:YES];
          [self.playerTwoTargetPatternView setHidden:YES];
          [self setPlaying:YES];
+         [self setRoundTimer];
      }];
+}
+
+- (void)setRoundTimer {
+    self.roundTimer = [NSTimer scheduledTimerWithTimeInterval:ROUND_LENGTH target:(self) selector:(@selector(resetRound)) userInfo:(nil) repeats:(NO)];
+}
+
+- (void)stopRoundTimer {
+    [self.roundTimer invalidate];
+    self.roundTimer = nil;
 }
 
 - (void)resetGame {
@@ -357,6 +372,7 @@ static NSString *cellIdentifer = @"TowelPatternCell";
         [self.playerOneTargetPatternView setHidden:YES];
         [self.playerTwoTargetPatternView setHidden:YES];
         [self setPlaying:YES];
+        [self setRoundTimer];
     }];
 
 }
